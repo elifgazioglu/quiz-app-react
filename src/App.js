@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Settings from "./pages/Settings";
+import Questions from "./pages/Questions";
+import FinalScreen from "./pages/FinalScreen";
+import { Box, Container } from "@mui/material";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Container maxWidth="sm">
+          <Box textAlign="center" mt={5}>
+          <Routes>
+            <Route path="/" exact element={<Settings />} />
+            <Route path="/questions" exact element={<Questions />} />
+            <Route path="/score" exact element={<FinalScreen />} />
+          </Routes>
+          </Box>
+        </Container>
+      </Router>
+    </>
   );
 }
 
