@@ -43,7 +43,7 @@ const Settings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!response.trivia_categories || !difficultyOptions || typeOptions) {
+    if (!response.trivia_categories || !difficultyOptions || !typeOptions) {
       setErrorMessage("Please select all options");
       setTimeout(() => {
         setErrorMessage("");
@@ -53,7 +53,7 @@ const Settings = () => {
     
     navigate("/questions");
   };
-
+  
   return (
     <form onSubmit={handleSubmit}>
       <img
