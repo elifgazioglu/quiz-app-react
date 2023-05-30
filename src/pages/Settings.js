@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectField from "../components/SelectField";
 import TextFieldComp from "../components/TextFieldComp";
@@ -7,8 +7,12 @@ import useAxios from "../hooks/useAxios";
 
 const Settings = () => {
   const { response, error, loading } = useAxios({ url: "/api_category.php" });
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const handleSelectChange = (event) => {
+    setErrorMessage("");
+  };
 
   if (loading) {
     return (
@@ -39,7 +43,15 @@ const Settings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/questions');
+    if (!response.trivia_categories || !difficultyOptions || typeOptions) {
+      setErrorMessage("Please select all options");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    
+    navigate("/questions");
   };
 
   return (
@@ -53,10 +65,25 @@ const Settings = () => {
       <SelectField
         options={response.trivia_categories}
         label="Category"
+        onChange={handleSelectChange}
       ></SelectField>
-      <SelectField options={difficultyOptions} label="Difficulty"></SelectField>
-      <SelectField options={typeOptions} label="Type"></SelectField>
+      <SelectField
+        options={difficultyOptions}
+        label="Difficulty"
+        onChange={handleSelectChange}
+      ></SelectField>
+
+      <SelectField
+        options={typeOptions}
+        label="Type"
+        onChange={handleSelectChange}
+      ></SelectField>
       <TextFieldComp />
+      {errorMessage && (
+        <Typography variant="h6" mt={2} color="red" fontSize={15}>
+          {errorMessage}
+        </Typography>
+      )}
       <Box mt={3} width="100%">
         <Button
           style={{ backgroundColor: "pink" }}
