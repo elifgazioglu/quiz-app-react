@@ -1,4 +1,4 @@
-# Quiz App 📚
+# Quiz App 📄
 
 Build with Reactjs and used Open Trivia for the data💁🏻‍♀️
 
